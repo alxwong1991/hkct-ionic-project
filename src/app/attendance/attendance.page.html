@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>attendance</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-input placeholder="Input class name" class="custom" type="text" [(ngModel)]=newClassName 
+  style="width:20rem;height: 4rem; font-size: 1.5rem; margin:auto; margin-top: 2rem; margin-bottom: 1rem"></ion-input>
+  <ion-input placeholder="Input class time" class="custom" type="text" [(ngModel)]=newclassTime 
+  style="width:20rem;height: 4rem; font-size: 1.5rem; margin:auto; margin-top: 2rem; margin-bottom: 1rem"></ion-input>
+  <ion-input placeholder="Input class code" class="custom" type="text" [(ngModel)]=studentCode 
+  style="width:20rem;height: 4rem; font-size: 1.5rem; margin:auto; margin-top: 2rem; margin-bottom: 1rem"></ion-input>
+  
+
+
+  <div style="width: fit-content; margin:auto; margin-bottom:2rem">
+    <ion-button (click)="addClass()" shape="round" color="warning" style="margin:auto">
+      Add Class
+    </ion-button>
+  </div>
+  <div style="width: fit-content; margin:auto; margin-bottom:2rem">
+    <ion-button (click)="addClassTime(newclassTime)" shape="round" color="warning" style="margin:auto">
+      Add Class Time
+    </ion-button>
+  </div>
+
+  <ion-list style="width:fit-content; margin:auto">
+    <ion-item>
+      <ion-select interface="popover" placeholder="Select Class" (ionChange)="loadClass($event)"> 
+        <ion-select-option *ngFor="let class of classes;let i = index" [value] = i >{{class.className}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-item-divider>
+    <ion-label style="font-size: 3rem; font-weight: 600;">{{currentClassName}}</ion-label>
+  </ion-item-divider>
+  <ion-list >
+    <ion-item *ngFor="let ct of classTime">
+      {{ct}}
+    </ion-item>
+  </ion-list>
+
+</ion-content>
