@@ -1,14 +1,44 @@
 <ion-header> </ion-header>
 
-<ion-content class="ion-padding" color="light">
+<ion-content
+  class="ion-padding"
+  color="light"
+  [style.visibility]="content_visibility"
+>
   <div class="title">
-    <h4>Login with QR code</h4>
-    <p>Please scan the code to get started</p>
+    <h4>QR code</h4>
+    <p>Please scan the code</p>
   </div>
 
   <!-- <div class="ion-margin-top">
     <ion-button expand="block" (click)="login()">LOGIN</ion-button>
   </div> -->
+
+  <ion-card class="ion-text-card">
+    <ion-card-content>
+      <qrcode
+        [qrdata]="qrCodeString"
+        [width]="256"
+        [errorCorrectionLevel]="'M'"
+      ></qrcode>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button
+    (click)="startScan()"
+    expand="block"
+    fill="clear"
+    shape="round"
+    class="ion-margin"
+  >
+    Scan QR Code
+  </ion-button>
+
+  <ion-item *ngIf="scannedResult">
+    <ion-label class="ion-text-wrap"
+      >Scanned Result: {{scannedResult}}</ion-label
+    >
+  </ion-item>
 
   <div class="ion-margin-top ion-text-center">
     <a (click)="dismiss()">Close</a>
