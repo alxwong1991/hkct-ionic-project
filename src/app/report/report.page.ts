@@ -9,6 +9,7 @@ import { getDatabase, ref, set, update, onValue, get, remove,child  } from "fire
 import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { doc } from 'firebase/firestore';
+import { Router } from '@angular/router';
 
 
 
@@ -66,7 +67,7 @@ export class ReportPage implements OnInit {
   abc = "";
 
   db = getDatabase(initializeApp(environment.firebaseConfig));
-  constructor(private datePipe: DatePipe) {
+  constructor(private datePipe: DatePipe, private router:Router) {
     const refdb = ref(this.db, 'classes');
       onValue(refdb, (snapshot) => {
       this.classes = snapshot.val();
@@ -79,63 +80,14 @@ export class ReportPage implements OnInit {
   ngOnInit() {
   }
 
-  externalDataRetrievedFromServer = [
-    { name: 'Bartek', age: 34 , c:'a'},
-    { name: 'John', age: 27 , c:'b'},
-    { name: 'Elizabeth', age: 30, c:'c' },
-  ];
-
-  externalDataRetrievedFromServer2 = [
-    { name: 'Bartek', age: [34,44] , c:'a'},
-    { name: 'John', age: [27,22] , c:'b'},
-    { name: 'Elizabeth', age: [30,44], c:'c' },
-  ];
-
+  goToAdmin(){
+    this.router.navigate(['/admin'])
+  }
 
   classTime = {};
   studentCode = {};
 
-  
-
-
-
-
-  buildTableBody(data, columns) {
-    var body = [];
-
-    body.push(columns);
-    console.log(body);
-    
-    data.forEach(function(row) {
-        var dataRow = [];
-        var count = 0;
-        columns.forEach(function(column) {
-          if(count > 0){
-            for(var i = 0; i < row[column].length; i++){
-              console.log(row[column][i]);
-            }
-          }
-          count++;
-        })
-        
-        
-
-        body.push(dataRow);
-    });
-    return body;
-  }
-
-
-  table(data, columns) {
-      return {
-          table: {
-              headerRows: 1,
-              body: this.buildTableBody(data, columns)
-          }
-      };
-    }
-
-    pdfDownload(){
+  pdfDownload(){
 
     console.log(JSON.stringify(this.classes))
 
@@ -222,17 +174,6 @@ export class ReportPage implements OnInit {
     }
 
 
-    // var attemptt = [
-    // {
-    //   table:
-    //   {
-    //     HeadersRows:1,
-    //     body: [[{text: '123', colSpan: 2},''],
-    //           [{text: 'studentCode'}, {text: 'Attended'}],
-    //           [['123'],['123']]]
-    //   }
-    // }
-    // ]
 
     const docDef = 
     {

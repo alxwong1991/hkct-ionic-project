@@ -57,7 +57,7 @@ export class AttendancePage implements OnInit {
   count = 0;
 
   db = getDatabase(initializeApp(environment.firebaseConfig));
-  constructor(private datePipe: DatePipe) {
+  constructor(private datePipe: DatePipe, private router:Router) {
     const refdb = ref(this.db, 'classes');
       onValue(refdb, (snapshot) => {
       this.classes = snapshot.val();
@@ -92,6 +92,10 @@ export class AttendancePage implements OnInit {
 
   ngOnInit() {
     
+  }
+
+  goToAdmin(){
+    this.router.navigate(['/admin'])
   }
 
   dateChange(value:any){
