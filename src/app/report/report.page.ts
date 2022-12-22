@@ -158,9 +158,9 @@ export class ReportPage implements OnInit {
     a.forEach(([key, value]) =>
     {
       //Want to get class name, so
-      thisClassName.push("{text: "+ value.className +"}");
+      thisClassName.push([{text: value.className, margin:[0,100,0,0]}]);
       thisStudentCode.push(value.studentCode);
-
+      console.log(thisClassName)
 
       b = value.classTime;
       //console.log("b: " + b);
@@ -238,12 +238,13 @@ export class ReportPage implements OnInit {
     {
       pageSize: 'A4',
       pageOrientation: 'portrait',
-      pageMargins:[20,10,40,60],
+      pageMargins:[135,30,40,20],
       content:
-      [
+      [{text: 'HKCT Report', fontSize: 30},
         {
           table: 
           {
+            width:['33%','34%','33%'],
             layout: 'lightHorizontalLines',
             headerRows: 1,
             body: 
@@ -259,7 +260,7 @@ export class ReportPage implements OnInit {
             ]
           }
       }
-    ]
+    ],
   }
 
     this.pdfObj = pdfMake.createPdf(docDef);
