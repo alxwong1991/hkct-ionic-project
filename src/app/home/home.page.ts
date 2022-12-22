@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { Component } from '@angular/core';
 import { getDatabase, ref, set, update, onValue, get, remove,child  } from "firebase/database";
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -31,8 +32,11 @@ export class HomePage {
   db = getDatabase(initializeApp(environment.firebaseConfig));
   count = 0;
   
+  goToAdmin(){
+      this.router.navigate(['/admin'])
+    }
   
-  constructor() {
+  constructor(private router:Router) {
 
       const refdb = ref(this.db, 'members');
       onValue(refdb, (snapshot) => {
@@ -43,10 +47,13 @@ export class HomePage {
       }
       
     });
+
     
 
   }
 
+    
+    
 
   generateMember(){
 

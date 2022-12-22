@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { ModalController } from '@ionic/angular';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-qr-code',
@@ -8,11 +9,24 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./qr-code.page.scss'],
 })
 export class QrCodePage implements OnDestroy {
-  qrCodeString = 'This is a secret qr code message';
+  
+  sc:any;
+  qrCodeString = "123";
+  checkName = async () => {
+    this.sc = await Preferences.get({ key: 'sc' });
+  
+    this.qrCodeString = this.sc;
+    console.log(this.sc);
+  };
+  
   scannedResult: any;
   content_visibility = '';
 
   constructor(public modalController: ModalController) {}
+
+  
+
+  
 
   async dismiss() {
     await this.modalController.dismiss();

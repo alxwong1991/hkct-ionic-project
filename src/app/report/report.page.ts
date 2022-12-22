@@ -9,6 +9,7 @@ import { getDatabase, ref, set, update, onValue, get, remove,child  } from "fire
 import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { doc } from 'firebase/firestore';
+import { Router } from '@angular/router';
 
 
 
@@ -66,7 +67,7 @@ export class ReportPage implements OnInit {
   abc = "";
 
   db = getDatabase(initializeApp(environment.firebaseConfig));
-  constructor(private datePipe: DatePipe) {
+  constructor(private datePipe: DatePipe, private router:Router) {
     const refdb = ref(this.db, 'classes');
       onValue(refdb, (snapshot) => {
       this.classes = snapshot.val();
@@ -79,90 +80,42 @@ export class ReportPage implements OnInit {
   ngOnInit() {
   }
 
-  externalDataRetrievedFromServer = [
-    { name: 'Bartek', age: 34 , c:'a'},
-    { name: 'John', age: 27 , c:'b'},
-    { name: 'Elizabeth', age: 30, c:'c' },
-  ];
-
-  externalDataRetrievedFromServer2 = [
-    { name: 'Bartek', age: [34,44] , c:'a'},
-    { name: 'John', age: [27,22] , c:'b'},
-    { name: 'Elizabeth', age: [30,44], c:'c' },
-  ];
-
+  goToAdmin(){
+    this.router.navigate(['/admin'])
+  }
 
   classTime = {};
   studentCode = {};
 
-  
-
-
-
-
-  buildTableBody(data, columns) {
-    var body = [];
-
-    body.push(columns);
-    console.log(body);
-    
-    data.forEach(function(row) {
-        var dataRow = [];
-        var count = 0;
-        columns.forEach(function(column) {
-          if(count > 0){
-            for(var i = 0; i < row[column].length; i++){
-              console.log(row[column][i]);
-            }
-          }
-          count++;
-        })
-        
-        
-
-        body.push(dataRow);
-    });
-    return body;
-  }
-
-
-  table(data, columns) {
-      return {
-          table: {
-              headerRows: 1,
-              body: this.buildTableBody(data, columns)
-          }
-      };
-    }
-
-    pdfDownload(){
+  pdfDownload(){
 
     console.log(JSON.stringify(this.classes))
 
     var thisClassName = [];
-    thisClassName.push({ text: 'ClassName' });
 
     var thisClassTime = [];
-    thisClassTime.push({ text: 'ClassTime' });
 
     var thisStudentCode = [];
-    thisStudentCode.push({ text: 'StudentCode'});
+
+    var thisClassTimeAttend = [];
+
+    var attemptt = [];
 
 
     var a = Object.entries(this.classes);
-    console.log("a: " + a);
+    //console.log("a: " + a);
     var b = {};
     //Loop depends on the number of class, key = number of class, value = specific class
     
     a.forEach(([key, value]) =>
     {
       //Want to get class name, so
-      thisClassName.push(value.className);
+      thisClassName.push([{text: value.className, margin:[0,100,0,0]}]);
       thisStudentCode.push(value.studentCode);
-
+      console.log(thisClassName)
 
       b = value.classTime;
-      console.log("b: " + b);
+      //console.log("b: " + b);
       
       var c = Object.entries(b);
       c.forEach(([key, value])=>
@@ -170,20 +123,47 @@ export class ReportPage implements OnInit {
         //This is  key = '20-22-2022' :  value = { 222 : false ...}
         //Want to get classTime, so taking key
         thisClassTime.push(key);
-        console.log("c: " + c);
-        console.log("c.value: " + value);
+        // console.log("c: " + c);
+        // console.log("c.value: " + value);
 
-        var d = Object.entries(c.values);
+        var d = Object.entries(value);
+
+
+        //d = ['20557887', true], ['20669745', true], ['20807626', true]
+        //console.log(d);
+
         
 
+
+        
+        console.log(d);
+        console.log(attemptt);
+        var dkey = [];
+        var dvalue = [];
         d.forEach(([key,value]) => 
         {
-          console.log("d: " + d);
-          console.log("d.value: " + d);
+          dkey.push(key);
+          dvalue.push(value);
+          var e = Object.entries(value);
         })
+        attemptt = 
+        [
+          {
+            table:
+            {
+              HeadersRows:1,
+              body: [[{text: key, colSpan: 2},''],
+                    [{text: 'studentCode'}, {text: 'Attended'}],
+                    [dkey, dvalue]]
+            }
+          }
+        ]
+        thisClassTimeAttend.push(attemptt);
       }) 
+      
     })
     
+    console.log(thisClassTimeAttend)
 
 
     var superCollection = [];
@@ -195,17 +175,18 @@ export class ReportPage implements OnInit {
 
 
 
-
     const docDef = 
     {
       pageSize: 'A4',
       pageOrientation: 'portrait',
-      pageMargins:[20,10,40,60],
+      pageMargins:[135,30,40,20],
       content:
-      [
+      [{text: 'HKCT Report', fontSize: 30},
         {
           table: 
           {
+            width:['33%','34%','33%'],
+            layout: 'lightHorizontalLines',
             headerRows: 1,
             body: 
             [
@@ -215,21 +196,12 @@ export class ReportPage implements OnInit {
                 {text: 'studentCode'}
               ],
               [
-                '123',
-                {
-                  table:
-                  {
-                    HeadersRows:1,
-                    body: [[{text: 'studentCode'}, {text: 'Attended'}],
-                          [['123'],['123']]]
-                  }
-                },
-                '123'
+                thisClassName, thisClassTimeAttend, thisStudentCode
               ]
             ]
           }
       }
-    ]
+    ],
   }
 
     this.pdfObj = pdfMake.createPdf(docDef);
