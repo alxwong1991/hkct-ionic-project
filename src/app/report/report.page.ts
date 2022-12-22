@@ -209,7 +209,23 @@ export class ReportPage implements OnInit {
             headerRows: 1,
             body: 
             [
-              superCollection
+              [
+                {text: 'className'},
+                {text: 'classTime'},
+                {text: 'studentCode'}
+              ],
+              [
+                '123',
+                {
+                  table:
+                  {
+                    HeadersRows:1,
+                    body: [[{text: 'studentCode'}, {text: 'Attended'}],
+                          [['123'],['123']]]
+                  }
+                },
+                '123'
+              ]
             ]
           }
       }
