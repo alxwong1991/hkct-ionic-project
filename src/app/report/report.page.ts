@@ -140,29 +140,30 @@ export class ReportPage implements OnInit {
     console.log(JSON.stringify(this.classes))
 
     var thisClassName = [];
-    thisClassName.push({ text: 'ClassName' });
 
     var thisClassTime = [];
-    thisClassTime.push({ text: 'ClassTime' });
 
     var thisStudentCode = [];
-    thisStudentCode.push({ text: 'StudentCode'});
+
+    var thisClassTimeAttend = [];
+
+    var attemptt = [];
 
 
     var a = Object.entries(this.classes);
-    console.log("a: " + a);
+    //console.log("a: " + a);
     var b = {};
     //Loop depends on the number of class, key = number of class, value = specific class
     
     a.forEach(([key, value]) =>
     {
       //Want to get class name, so
-      thisClassName.push(value.className);
+      thisClassName.push("{text: "+ value.className +"}");
       thisStudentCode.push(value.studentCode);
 
 
       b = value.classTime;
-      console.log("b: " + b);
+      //console.log("b: " + b);
       
       var c = Object.entries(b);
       c.forEach(([key, value])=>
@@ -170,20 +171,47 @@ export class ReportPage implements OnInit {
         //This is  key = '20-22-2022' :  value = { 222 : false ...}
         //Want to get classTime, so taking key
         thisClassTime.push(key);
-        console.log("c: " + c);
-        console.log("c.value: " + value);
+        // console.log("c: " + c);
+        // console.log("c.value: " + value);
 
-        var d = Object.entries(c.values);
+        var d = Object.entries(value);
+
+
+        //d = ['20557887', true], ['20669745', true], ['20807626', true]
+        //console.log(d);
+
         
 
+
+        
+        console.log(d);
+        console.log(attemptt);
+        var dkey = [];
+        var dvalue = [];
         d.forEach(([key,value]) => 
         {
-          console.log("d: " + d);
-          console.log("d.value: " + d);
+          dkey.push(key);
+          dvalue.push(value);
+          var e = Object.entries(value);
         })
+        attemptt = 
+        [
+          {
+            table:
+            {
+              HeadersRows:1,
+              body: [[{text: key, colSpan: 2},''],
+                    [{text: 'studentCode'}, {text: 'Attended'}],
+                    [dkey, dvalue]]
+            }
+          }
+        ]
+        thisClassTimeAttend.push(attemptt);
       }) 
+      
     })
     
+    console.log(thisClassTimeAttend)
 
 
     var superCollection = [];
@@ -194,7 +222,17 @@ export class ReportPage implements OnInit {
     }
 
 
-
+    // var attemptt = [
+    // {
+    //   table:
+    //   {
+    //     HeadersRows:1,
+    //     body: [[{text: '123', colSpan: 2},''],
+    //           [{text: 'studentCode'}, {text: 'Attended'}],
+    //           [['123'],['123']]]
+    //   }
+    // }
+    // ]
 
     const docDef = 
     {
@@ -206,6 +244,7 @@ export class ReportPage implements OnInit {
         {
           table: 
           {
+            layout: 'lightHorizontalLines',
             headerRows: 1,
             body: 
             [
@@ -215,16 +254,7 @@ export class ReportPage implements OnInit {
                 {text: 'studentCode'}
               ],
               [
-                '123',
-                {
-                  table:
-                  {
-                    HeadersRows:1,
-                    body: [[{text: 'studentCode'}, {text: 'Attended'}],
-                          [['123'],['123']]]
-                  }
-                },
-                '123'
+                thisClassName, thisClassTimeAttend, thisStudentCode
               ]
             ]
           }
