@@ -33,7 +33,11 @@ const routes: Routes = [
     path: 'qr-code',
     loadChildren: () =>
       import('./qr-code/qr-code.module').then((m) => m.QrCodePageModule),
+  },  {
+    path: 'report',
+    loadChildren: () => import('./report/report.module').then( m => m.ReportPageModule)
   },
+
 ];
 
 @NgModule({
