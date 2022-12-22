@@ -1,14 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>report</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-header> </ion-header>
 
-<ion-content>
-
-
-  <ion-button (click)="pdfDownload()" expand="block" fill="clear" shape="round">
-    Download PDF
+<ion-content class="ion-padding ion-text-center">
+  <h1>Report</h1>
+  <p>Here will generate a report in PDF format</p>
+  <img src="../../assets/icon/summary_icon.png" />
+  <ion-button
+    (click)="pdfDownload()"
+    expand="block"
+    fill="outline"
+    shape="round"
+    color="primary"
+  >
+    Download
   </ion-button>
-  
 </ion-content>

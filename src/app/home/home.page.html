@@ -1,35 +1,84 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-header [translucent]="true"> </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding ion-text-center">
+  <h1>Home</h1>
+
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Blank</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-input placeholder="Input member name" class="custom" type="text" [(ngModel)]=user style="width:20rem;height: 4rem; font-size: 1.5rem; margin:auto; margin-top: 2rem; margin-bottom: 1rem"></ion-input>
-  
-  <div style="width: fit-content; margin:auto; margin-bottom:2rem">
-    <ion-button (click)="generateMember()" shape="round" color="warning" style="margin:auto">
+  <ion-input
+    placeholder="Input member name"
+    class="custom"
+    type="text"
+    [(ngModel)]="user"
+    style="
+      width: 20rem;
+      height: 4rem;
+      font-size: 1.5rem;
+      margin: auto;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    "
+  ></ion-input>
+
+  <div style="width: fit-content; margin: auto; margin-bottom: 2rem">
+    <ion-button
+      (click)="generateMember()"
+      shape="round"
+      color="warning"
+      style="margin: auto"
+    >
       Add Member
     </ion-button>
   </div>
-  <div style="width:80%; margin:auto">
-    <ion-row style="align-items:center; margin:auto;padding-bottom:1rem; margin-bottom: 1rem; border-bottom: 2px solid grey;">
-      <ion-col size="4" style="margin:auto; text-align: center; font-size: 1.5rem;">Member</ion-col>
-      <ion-col size="4" style="margin:auto; text-align: center; font-size: 1.5rem;">Code</ion-col>
-      <ion-col size="4" style="margin:auto; text-align: center; font-size: 1.5rem;">Delete</ion-col>
+  <div style="width: 80%; margin: auto">
+    <ion-row
+      style="
+        align-items: center;
+        margin: auto;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid grey;
+      "
+    >
+      <ion-col
+        size="4"
+        style="margin: auto; text-align: center; font-size: 1.5rem"
+        >Member</ion-col
+      >
+      <ion-col
+        size="4"
+        style="margin: auto; text-align: center; font-size: 1.5rem"
+        >Code</ion-col
+      >
+      <ion-col
+        size="4"
+        style="margin: auto; text-align: center; font-size: 1.5rem"
+        >Delete</ion-col
+      >
     </ion-row>
-    <ion-row *ngFor='let row of data; let i = index' style="margin-bottom:2rem">
-      <ion-col size="4" style="margin:auto; text-align: center; font-size: 1.5rem;">{{row.username}}</ion-col>
-      <ion-col size="4" style="margin:auto; text-align: center; font-size: 1.5rem;">{{row.code}}</ion-col>
-      <ion-col size="4" style="margin:auto; text-align: center; font-size: 1.5rem;"><ion-icon name="trash-outline" (click)="removeRow(row)"></ion-icon></ion-col>
+    <ion-row
+      *ngFor="let row of data; let i = index"
+      style="margin-bottom: 2rem"
+    >
+      <ion-col
+        size="4"
+        style="margin: auto; text-align: center; font-size: 1.5rem"
+        >{{row.username}}</ion-col
+      >
+      <ion-col
+        size="4"
+        style="margin: auto; text-align: center; font-size: 1.5rem"
+        >{{row.code}}</ion-col
+      >
+      <ion-col
+        size="4"
+        style="margin: auto; text-align: center; font-size: 1.5rem"
+        ><ion-icon name="trash-outline" (click)="removeRow(row)"></ion-icon
+      ></ion-col>
     </ion-row>
   </div>
 </ion-content>
