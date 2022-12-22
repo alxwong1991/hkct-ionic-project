@@ -40,13 +40,14 @@ export class QrCodePage implements OnDestroy {
       }
       await BarcodeScanner.hideBackground();
       document.querySelector('body')?.classList.add('scanner-active');
+      this.content_visibility = 'hidden';
       const result = await BarcodeScanner.startScan();
       console.log(result);
+      this.content_visibility = 'show';
+      BarcodeScanner.showBackground();
+      document.querySelector('body')?.classList.remove('scanner-active');
       if (result?.hasContent) {
         this.scannedResult = result.content;
-        BarcodeScanner.showBackground();
-        document.querySelector('body')?.classList.remove('scanner-active');
-        this.content_visibility;
         console.log(this.scannedResult);
       }
     } catch (e) {
