@@ -11,7 +11,7 @@ import { Preferences } from '@capacitor/preferences';
 export class QrCodePage implements OnDestroy {
   
   sc:any;
-  qrCodeString = "123";
+  qrCodeString = "12345678";
   checkName = async () => {
     this.sc = await Preferences.get({ key: 'sc' });
   
@@ -61,8 +61,11 @@ export class QrCodePage implements OnDestroy {
       BarcodeScanner.showBackground();
       document.querySelector('body')?.classList.remove('scanner-active');
       if (result?.hasContent) {
-        this.scannedResult = result.content;
+        this.scannedResult = "Success!";
         console.log(this.scannedResult);
+        if(this.scannedResult == '12345678'){
+         
+        }
       }
     } catch (e) {
       console.log(e);

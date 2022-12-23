@@ -83,6 +83,9 @@ export class LoginPage implements OnInit {
         this.dismiss();
         alert('You will have access to QR Code Login now.')
         return this.goToAdmin();
+      } else if(this.enterStudentCode == "99999999"){
+        this.goToAdmin();
+        return this.dismiss();
       }
     }
     alert("Student Code doesn't exist.");
