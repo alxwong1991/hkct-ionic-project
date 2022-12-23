@@ -146,9 +146,6 @@ export class AttendancePage implements OnInit {
 
   addClass(){
 
-    
-      
-      
       var newmap = new Map();
       newmap.set(this.studentCode, false);
       var newobj = Object.fromEntries(newmap);
@@ -173,8 +170,6 @@ export class AttendancePage implements OnInit {
 
       console.log(obj);
       this.classTime = obj;
-      
-
 
       set(ref(this.db, 'classes/' + this.count), {
         className: this.newClassName,
@@ -182,7 +177,6 @@ export class AttendancePage implements OnInit {
         studentCode: this.studentCode
       });
       this.currentClassName = this.newClassName;
-    
     
   }
 
